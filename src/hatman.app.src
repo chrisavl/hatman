@@ -1,0 +1,12 @@
+{application, hatman,
+ [
+  {description, ""},
+  {vsn, "0.1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, {hatman_app, []}},
+  {env, []}
+ ]}.
