@@ -35,7 +35,10 @@ handle_cast(_Msg, State) ->
 handle_info(poll, State) ->
     erlang:send_after(60000, self(), poll),
 
-    case catch (State#state.poll_fun)() of
+    %% FIXME: does it really make sense to have the whitelist in env?
+    Whitelist = application:get_env(hatman, whitelist),
+
+    case catch (State#state.poll_fun)(Whitelist) of
         {'EXIT', Error} ->
             error_logger:warning_msg("~s: polling failed: ~p~n", [?MODULE, Error]),
             ok;
