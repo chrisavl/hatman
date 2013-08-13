@@ -18,12 +18,13 @@ Pretty much a carbon copy of [newrelic-erlang](https://github.com/wooga/newrelic
 Your stathat `ez_key` needs to be set as an application
 environment variable for the `hatman` app.
 
-You may also explicitly whitlist stats by setting the `whitelist`
+You may also explicitly whitelist stats by setting the `whitelist`
 application environment variable for the `hatman` app. If the whitelist
 is `undefined` all metrics are sent to stathat.
 
-So an example config would be something like this:
-    
+So an example config would be something like this (whitelist is optional, if
+undefined it means all statman keys are considered whitelisted):
+
     > application:get_env(hatman, ez_key).
     {ok, "stathat@example.org"}.
     > application:get_env(hatman, whitelist).
@@ -32,12 +33,15 @@ So an example config would be something like this:
 
 To get started and configuring which polling function to use, do this:
 
+    application:set_env(hatman, ez_key, "stathat@example.org").
     application:start(hatman).
-    PollFun = fun hatman_statman:poll/1.
-    hatman_poller:start_link(PollFun).
+    statman_aggregator:start_link().
+    hatman_poller:start_link(fun hatman_statman:poll/1).
 
 To test that hatman works, do this:
 
+    application:start(hatman).
+    EzKey = "stathat@example.org".
     hatman_stathat:ez_json(EzKey, hatman_stathat:sample_stats()).
 
 
