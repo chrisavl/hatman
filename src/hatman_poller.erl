@@ -42,6 +42,9 @@ handle_info(poll, State) ->
         {'EXIT', Error} ->
             error_logger:warning_msg("~s: polling failed: ~p~n", [?MODULE, Error]),
             ok;
+        [] ->
+            %% no stats, no post
+            ok;
         Stats ->
             case catch hatman_stathat:ez_json(Stats) of
                 ok ->
