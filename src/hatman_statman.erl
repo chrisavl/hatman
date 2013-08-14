@@ -26,9 +26,12 @@ format_metric(Metric) ->
     end.
 
 format_histogram(Metric) ->
-    lists:map(fun (Sample) ->
-                      [{stat, format_key(proplists:get_value(key, Metric))}, {value, Sample}]
-              end, proplists:get_value(value, Metric, [])).
+    lists:flatmap(fun ({Bucket, Count}) ->
+                          lists:duplicate(
+                            Count,
+                            [{stat, format_key(proplists:get_value(key, Metric))},
+                             {value, Bucket}])
+                  end, proplists:get_value(value, Metric, [])).
 
 format_counter(Metric) ->
     [[{stat, format_key(proplists:get_value(key, Metric))},
