@@ -36,7 +36,7 @@ handle_info(poll, State) ->
     erlang:send_after(60000, self(), poll),
 
     %% FIXME: does it really make sense to have the whitelist in env?
-    Whitelist = application:get_env(hatman, whitelist),
+    {ok, Whitelist} = application:get_env(hatman, whitelist),
 
     case catch (State#state.poll_fun)(Whitelist) of
         {'EXIT', Error} ->
@@ -47,7 +47,7 @@ handle_info(poll, State) ->
             ok;
         Stats ->
             case catch hatman_stathat:ez_json(Stats) of
-                ok ->
+                {ok, {{200, "OK"}, _, _}} ->
                     ok;
                 Other ->
                     error_logger:warning_msg("~p: push failed: ~p~n",

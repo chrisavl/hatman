@@ -14,7 +14,7 @@ poll(Whitelist) ->
 is_whitelisted(_Metric, undefined) ->
     true;
 is_whitelisted(Metric, Whitelist) ->
-    lists:member(proplists:get_value(type, Metric), Whitelist).
+    lists:member(proplists:get_value(key, Metric), Whitelist).
 
 
 format_metric(Metric) ->
