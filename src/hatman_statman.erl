@@ -46,7 +46,7 @@ format_key(Key) ->
     iolist_to_binary(format_key2(Key)).
 
 format_key2(Key) when is_tuple(Key) ->
-    [string:join(lists:map(fun format_key2/1, tuple_to_list(Key)), " ")];
+    [string:join(lists:map(fun format_key2/1, tuple_to_list(Key)), "/")];
 format_key2(Key) when is_atom(Key) ->
     [atom_to_list(Key)];
 format_key2(Key) when is_binary(Key) orelse is_list(Key) ->

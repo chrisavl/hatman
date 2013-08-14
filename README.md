@@ -9,7 +9,7 @@ Statman metrics maps to stathat data points in the following way:
  * counter   -> count
  * gauge     -> value
 
-Statman keys are flattened and join with a space, e.g {my, key} to "my key".
+Statman keys are flattened and join with a "/", e.g {my, key} to "my/key".
 
 Pretty much a carbon copy of [newrelic-erlang](https://github.com/wooga/newrelic-erlang).
 
