@@ -5,7 +5,14 @@
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  sasl,
+                  crypto,
+                  asn1,
+                  public_key,
+                  ssl,
+                  lhttpc,
+                  statman
                  ]},
   {mod, {hatman_app, []}},
   {env, []}
